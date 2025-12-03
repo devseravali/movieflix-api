@@ -8,13 +8,12 @@ const port = 3000;
 app.use(express.json());
 
 app.get("/movies", async (_, res) => {
-
     const movies = await prisma.movie.findMany({
         orderBy: { title: "asc" },
         include: {
             genre: true,
-            language: true
-        }
+            language: true,
+        },
     });
     res.json(movies);
 });
@@ -50,6 +49,35 @@ app.post("/movies", async (req, res) => {
     } catch (error) {
         return res.status(500).send({ message: "Falha ao cadastrar um filme" });
     }
+});
+
+app.put("/movies/:id", async (req, res) => {
+    const id = Number(req.params.id);
+
+    const movie = await prisma.movie.findUnique({
+        where: {
+            id,
+        },
+    });
+
+    try {
+        if (!movie) {
+            return res.status(404).send({ message: "Filme não encontrado" });
+        }
+
+        const data = { ...req.body };
+        data.release_date = data.release_date
+            ? new Date(data.release_date)
+            : undefined;
+
+        await prisma.movie.update({
+            where: { id },
+            data: data,
+        });
+    } catch (error) {
+        return res.status(500).send({ message: "Falha ao atualizar o filme" });
+    }
+    res.status(200).send();
 });
 
 app.listen(port, () => {
