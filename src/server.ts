@@ -5,9 +5,15 @@ const prisma = new PrismaClient();
 const app = express();
 const port = 3000;
 
-app.get("/movies", async (req, res) => {
+app.get("/movies", async (_, res) => {
 
-    const movies = await prisma.movie.findMany();
+    const movies = await prisma.movie.findMany({
+        orderBy: { title: "asc" },
+        include: {
+            genre: true,
+            language: true
+        }
+    });
     res.json(movies);
 });
 
