@@ -14,7 +14,7 @@ pnpm-debug.log*
 prisma/dev.db
 prisma/.env
 prisma/migrations/
-/src/generated/prisma
+generated/
 
 # TypeScript
 *.tsbuildinfo
