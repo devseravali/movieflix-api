@@ -31,6 +31,8 @@ model Movie {
 
   genre    Genre?    @relation(fields: [genre_id], references: [id], map: "fk_genre")
   language Language? @relation(fields: [language_id], references: [id], map: "fk_language")
+
+   @@map("movies")
 }
 
 model sales {
