@@ -15,6 +15,7 @@ prisma/dev.db
 prisma/.env
 prisma/migrations/
 generated/
+src/generated/
 
 # TypeScript
 *.tsbuildinfo
