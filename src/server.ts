@@ -106,7 +106,7 @@ app.delete("/movies/:id", async (req, res) => {
 
 app.get("/movies/:genreName", async (req, res) => { 
     try {
-        const moviesFilterdedByGenreNam = await prisma.movie.findMany({
+        const moviesFilteredByGenreName = await prisma.movie.findMany({
             include: {
                 genre: true,
             },
@@ -119,7 +119,7 @@ app.get("/movies/:genreName", async (req, res) => {
                 }
             }
         });
-        res.status(200).send(moviesFilterdedByGenreNam);
+        res.status(200).send(moviesFilteredByGenreName);
     } catch (error) {
          res.status(500).send({ message: "Não foi possível buscar os filmes por gênero" });
     }
