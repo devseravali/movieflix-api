@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -8,15 +7,15 @@ datasource db {
 }
 
 model Genre {
-  id     Int     @id @default(autoincrement())
-  name   String? @db.VarChar(100)
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(100)
 
   movies Movie[]
 }
 
 model Language {
-  id     Int     @id @default(autoincrement())
-  name   String? @db.VarChar(100)
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(100)
 
   movies Movie[]
 }
@@ -32,7 +31,7 @@ model Movie {
   genre    Genre?    @relation(fields: [genre_id], references: [id], map: "fk_genre")
   language Language? @relation(fields: [language_id], references: [id], map: "fk_language")
 
-   @@map("movies")
+  @@map("movies")
 }
 
 model sales {
