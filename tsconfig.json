@@ -1,26 +1,23 @@
 // Visit https://aka.ms/tsconfig to read more about this file
 {
   "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
-
-    // Environment Settings
+    // Módulos e versão do JavaScript
     "module": "esnext",
     "target": "es2019",
+
     "types": [],
 
-    // Other Outputs
+    // Arquivos de saída
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
+    // Regras de verificação importantes
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
-
-    // Recommended Options
     "strict": true,
+
+    // Comportamentos essenciais
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
@@ -29,8 +26,15 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
 
-    // ✅ Permite importar arquivos .json
+    // Resolução de módulos
     "resolveJsonModule": true,
-    "moduleResolution": "node"
-  }
+    "moduleResolution": "node",
+
+    // Estrutura de pastas
+    "outDir": "./dist",
+    "rootDir": "./"
+  },
+
+  "include": ["src", "swagger.json"],
+  "exclude": ["node_modules"]
 }
