@@ -12,24 +12,69 @@ pnpm-debug.log*
 
 # Prisma
 prisma/dev.db
+
+# Logs
+logs
+*.log
+debug.log
+
 prisma/.env
 prisma/migrations/
 generated/
+
+# Banco de dados e arquivos temporários
+data/
+
+# Local environment overrides
+*.local
+
 src/generated/
 
 # TypeScript
 *.tsbuildinfo
 
 # Build output
+
+# Prisma generated client
+generated/prisma/
+
+# Ignore SQLite files
+*.sqlite
+*.sqlite-journal
+
 dist/
 build/
+
+# Coverage
+coverage/
+*.lcov
+
 out/
 
 # OS
 .DS_Store
+
+# Compiled source
+*.exe
+*.out
+*.app
+
 Thumbs.db
 
 # IDEs
+
+# Windows
+ehthumbs.db
+Desktop.ini
+
 .vscode/
 .idea/
 .history/
+
+
+# Docker
+docker-compose.override.yml
+docker-compose.*.yml
+Dockerfile.*
+.docker/
+tmp/
