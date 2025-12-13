@@ -87,71 +87,17 @@ Acesse a documentação interativa através de:
 
 | Método   | Rota                | Descrição                |
 |----------|---------------------|--------------------------|
-| **GET**  | `/movies`           | Lista todos os filmes    |
-| **POST** | `/movies`           | Cadastra um novo filme   |
-| **GET**  | `/movies/:genreName`| Filtra filmes por gênero |
-| **PUT**  | `/movies/:id`       | Atualiza um filme        |
-| **DELETE** | `/movies/:id`     | Remove um filme          |
+| **GET**    | `/movies`                   | Listar todos os filmes         |
+| **PUT**    | `/movies/{id}`              | Atualizar um filme existente   |
+| **DELETE** | `/movies/{id}`              | Remover um filme              |
+| **GET**    | `/movies/{genreName}` | Filtrar filmes por gênero      |
+
 
 ---
 
 ## 📦 Exemplos de Requisição e Resposta
 
-### POST /movies
-**Requisição:**
-```json
-{
-	"title": "O Poderoso Chefão",
-	"genre_id": 1,
-	"language_id": 1,
-	"oscar_count": 3,
-	"release_date": "1972-03-24"
-}
-```
-**Resposta de sucesso:**
-```json
-{
-	"id": 10,
-	"title": "O Poderoso Chefão",
-	"genre_id": 1,
-	"language_id": 1,
-	"oscar_count": 3,
-	"release_date": "1972-03-24T00:00:00.000Z"
-}
-```
 
-### GET /movies
-**Resposta:**
-```json
-[
-	{
-		"id": 1,
-		"title": "Matrix",
-		"genre": { "id": 1, "name": "Ação" },
-		"language": { "id": 1, "name": "Português" },
-		"oscar_count": 4,
-		"release_date": "1999-03-31T00:00:00.000Z"
-	}
-]
-```
-
-### PUT /movies/:id
-**Requisição:**
-```json
-{
-	"title": "Matrix Reloaded",
-	"oscar_count": 0
-}
-```
-**Resposta de sucesso:**
-Status 200
-
-### DELETE /movies/:id
-**Resposta de sucesso:**
-Status 200
-```json
-{ "message": "Filme deletado com sucesso" }
-```
 
 ---
 

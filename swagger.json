@@ -1,18 +1,18 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API de Filmes",
-        "description": "API para gerenciamento de filmes",
-        "version": "1.0.0"
+        "title": "MovieFlix API",
+        "version": "1.0.0",
+        "description": "API para gerenciamento de filmes"
     },
     "paths": {
         "/movies": {
             "get": {
                 "tags": ["Movie"],
-                "summary": "Obter todos os filmes",
+                "summary": "Listar todos os filmes",
                 "responses": {
                     "200": {
-                        "description": "Retorna uma lista de filmes",
+                        "description": "Lista de todos os filmes",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -23,10 +23,12 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "500": { "description": "Erro ao buscar filmes" }
                 }
             }
         },
+
         "/movies/{id}": {
             "put": {
                 "tags": ["Movie"],
@@ -37,9 +39,7 @@
                         "in": "path",
                         "required": true,
                         "description": "ID do filme a ser atualizado",
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "schema": { "type": "integer" }
                     }
                 ],
                 "requestBody": {
@@ -58,6 +58,7 @@
                     "500": { "description": "Erro interno do servidor" }
                 }
             },
+
             "delete": {
                 "tags": ["Movie"],
                 "summary": "Remover um filme",
@@ -66,6 +67,7 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
+                        "description": "ID do filme a ser removido",
                         "schema": { "type": "integer" }
                     }
                 ],
@@ -76,7 +78,8 @@
                 }
             }
         },
-        "/movies/{genreName}": {
+
+        "/movies/genre/{genreName}": {
             "get": {
                 "tags": ["Movie"],
                 "summary": "Filtrar filmes por gênero",
@@ -86,30 +89,31 @@
                         "in": "path",
                         "required": true,
                         "description": "Nome do gênero para filtrar os filmes",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
                 ],
                 "responses": {
                     "200": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type":"array", 
-                                "items": {
-                                    "$ref": "#/components/schemas/Movie"
+                        "description": "Lista de filmes filtrados por gênero",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Não foi possível buscar os filmes por gênero"
                     }
-                },
-
-                    "500": { "description": "Não foi possível buscar os filmes por gênero" }
                 }
             }
         }
     },
+
     "components": {
         "schemas": {
             "Movie": {
@@ -117,12 +121,29 @@
                 "properties": {
                     "id": { "type": "integer" },
                     "title": { "type": "string" },
-                    "genre": { "type": "string" },
-                    "language": { "type": "string" },
+                    "genre": { "$ref": "#/components/schemas/Genre" },
+                    "language": { "$ref": "#/components/schemas/Language" },
                     "oscar_count": { "type": "integer" },
                     "release_date": { "type": "string", "format": "date" }
                 }
             },
+
+            "Genre": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string" }
+                }
+            },
+
+            "Language": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "name": { "type": "string" }
+                }
+            },
+
             "MovieInput": {
                 "type": "object",
                 "required": [
