@@ -7,7 +7,11 @@
         "dev": "npx tsx watch src/server.ts",
         "start": "node dist/src/server.js",
         "build": "tsc",
-        "format": "prettier --write \"src/**/*.ts\""
+        "format": "prettier --write \"src/**/*.ts\"",
+        "pm2:start": "pm2 start dist/src/server.js --name movieflix-api",
+        "pm2:dev": "pm2 start npx --interpreter none -- tsx watch src/server.ts --name movieflix-api-dev",
+        "pm2:stop": "pm2 stop movieflix-api || true && pm2 delete movieflix-api || true",
+        "pm2:logs": "pm2 logs movieflix-api"
     },
     "keywords": [],
     "author": "",
@@ -16,6 +20,7 @@
         "@types/express": "^5.0.5",
         "@types/node": "^24.10.3",
         "dotenv": "^17.2.3",
+        "pm2": "^6.0.14",
         "prettier": "3.7.3",
         "prisma": "^6.19.0",
         "ts-node": "^10.9.2",
