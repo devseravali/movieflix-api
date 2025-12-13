@@ -3,16 +3,59 @@ import { PrismaClient } from "@prisma/client";
 import swaggerUi from "swagger-ui-express";
 import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
-const swaggerDocument = require("../swagger.json");
-
 const prisma = new PrismaClient();
 const app = express();
 const port = 3000;
 
+app.get("/genres/search", async (req, res) => {
+    const { name } = req.query;
+    if (!name || typeof name !== "string") {
+        return res
+            .status(400)
+            .json({ message: "Parâmetro 'name' é obrigatório" });
+    }
+    try {
+        const genres = await prisma.genre.findMany({
+            where: {
+                name: {
+                    contains: name,
+                    mode: "insensitive",
+                },
+            },
+            orderBy: { id: "asc" },
+        });
+        res.json(genres);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar gêneros" });
+    }
+});
+
+app.get("/languages", async (req, res) => {
+    try {
+        const languages = await prisma.language.findMany({
+            orderBy: { id: "asc" },
+        });
+        res.json(languages);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar idiomas" });
+    }
+});
+
+const require = createRequire(import.meta.url);
+const swaggerDocument = require("../swagger.json");
+
 app.use(express.json());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get("/genres", async (req, res) => {
+    try {
+        const genres = await prisma.genre.findMany({ orderBy: { id: "asc" } });
+        res.json(genres);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar gêneros" });
+    }
+});
 
 app.get("/movies", async (_, res) => {
     try {
@@ -108,15 +151,18 @@ app.delete("/movies/:id", async (req, res) => {
 
 app.get("/movies/:genreName", async (req, res) => {
     try {
+        const genreName = req.params.genreName;
         const movies = await prisma.movie.findMany({
             include: { genre: true },
             where: {
-                genre: {
-                    name: {
-                        equals: req.params.genreName,
-                        mode: "insensitive",
-                    },
-                },
+                genre: genreName
+                    ? {
+                          name: {
+                              equals: genreName,
+                              mode: "insensitive",
+                          },
+                      }
+                    : null,
             },
         });
 
@@ -125,6 +171,27 @@ app.get("/movies/:genreName", async (req, res) => {
         res.status(500).json({
             message: "Não foi possível buscar os filmes por gênero",
         });
+    }
+});
+
+app.post("/genres", async (req, res) => {
+    const { name } = req.body;
+    try {
+        const genre = await prisma.genre.create({ data: { name } });
+        res.status(201).json(genre);
+    } catch (error) {
+        res.status(500).json({ message: "Falha ao cadastrar gênero" });
+    }
+});
+
+// Endpoint para cadastrar idiomas
+app.post("/languages", async (req, res) => {
+    const { name } = req.body;
+    try {
+        const language = await prisma.language.create({ data: { name } });
+        res.status(201).json(language);
+    } catch (error) {
+        res.status(500).json({ message: "Falha ao cadastrar idioma" });
     }
 });
 
