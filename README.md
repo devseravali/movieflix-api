@@ -1,12 +1,20 @@
 # 🎬 MovieFlix API
 
-API desenvolvida para fins de estudo, permitindo gerenciar filmes com CRUD completo, filtros por gênero e documentação via Swagger.
+API REST desenvolvida para **fins educacionais**, com **CRUD completo**, filtros por gênero e documentação interativa via **Swagger (OpenAPI)**.
+
+O projeto simula uma aplicação real de catálogo de filmes, seguindo boas práticas de organização, tipagem e manutenção de código.
 
 ---
 
 ## 📚 Sobre o projeto
-O MovieFlix API foi criado para praticar conceitos de backend utilizando **Node.js + TypeScript + Express + Prisma ORM** com banco **PostgreSQL**.  
-A API inclui rotas completas, documentação interativa e uma estrutura simples de manter e evoluir.
+
+O **MovieFlix API** foi criado para praticar conceitos de **back-end com Node.js**, utilizando:
+- **TypeScript** para tipagem estática e maior segurança;
+- **Express** como framework HTTP;
+- **Prisma ORM (v6)** para gerenciamento de banco de dados;
+- **PostgreSQL** como banco relacional.
+
+A aplicação conta com rotas completas, validação de dados, documentação interativa e uma estrutura modular, fácil de manter e evoluir.
 
 ---
 
@@ -21,132 +29,128 @@ A API inclui rotas completas, documentação interativa e uma estrutura simples 
 ---
 
 ## ✔️ Pré-requisitos
-Antes de iniciar, você precisa ter instalado:
-- Node.js (versão 18 ou superior)
+- Node.js (v18 ou superior)
 - PostgreSQL
-- Gerenciador de pacotes npm ou yarn
+- npm ou yarn
 
 ---
 
 ## 🚀 Como rodar o projeto
 
-### 1. Clone o repositório
+### 1️⃣ Clonar o repositório
 ```bash
 git clone <url-do-repo>
 cd movieflix-api
 ```
 
-### 2. Instale as dependências
+### 2️⃣ Instalar dependências
 ```bash
 npm install
 ```
 
-### 3. Configure o arquivo `.env`
-Crie um arquivo `.env` na raiz contendo:
+### 3️⃣ Configurar variáveis de ambiente
+Crie um arquivo `.env` na raiz com:
 ```env
 DATABASE_URL=postgresql://usuario:senha@localhost:5432/nome_do_banco
 ```
 
-### 4. Gere o Prisma Client
+### 4️⃣ Gerar o Prisma Client
 ```bash
 npx prisma generate
 ```
 
-### 5. Execute as migrações
+### 5️⃣ Executar migrações
 ```bash
 npx prisma migrate dev
 ```
 
-### 6. Inicie o servidor
+### 6️⃣ Iniciar o servidor
+
 **Modo desenvolvimento:**
 ```bash
 npm run dev
 ```
 
-**Produção:**
+**Modo produção:**
 ```bash
 npm run build
 npm start
 ```
 
+A API estará disponível em: `http://localhost:3000`
+
 ---
 
 ## 📘 Documentação da API
 
-Acesse a documentação interativa através de:  
+A documentação interativa está disponível em:
 **http://localhost:3000/docs**
 
 ![Swagger Documentation](./assets/swagger.png)
 
-> A imagem acima mostra a documentação Swagger com as principais rotas da API.
+> Documentação detalhada das rotas, parâmetros, request body, responses e códigos HTTP.
 
 ---
 
+## 🔎 Principais Endpoints
 
-## 🔎 Principais rotas
-
-| Método   | Rota                | Descrição                |
-|----------|---------------------|--------------------------|
-| **GET**    | `/movies`                   | Listar todos os filmes         |
-| **PUT**    | `/movies/{id}`              | Atualizar um filme existente   |
-| **DELETE** | `/movies/{id}`              | Remover um filme              |
-| **GET**    | `/movies/{genreName}` | Filtrar filmes por gênero      |
-
+| Método   | Rota                   | Descrição                        |
+|----------|------------------------|----------------------------------|
+| GET      | `/movies`              | Listar todos os filmes           |
+| GET      | `/movies/:id`          | Retornar filme pelo ID           |
+| GET      | `/movies/genre/:name`  | Filtrar filmes por gênero        |
+| POST     | `/movies`              | Cadastrar novo filme             |
+| PUT      | `/movies/:id`          | Atualizar filme existente        |
+| DELETE   | `/movies/:id`          | Remover filme                    |
 
 ---
 
-## 📦 Exemplos de Requisição e Resposta
+## 📦 Estrutura do Projeto
 
 
+```
+movieflix-api/
+├── assets/                  # Imagens e recursos estáticos (Swagger)
+├── data/
+│   ├── pgadmin/             # Dados do PgAdmin
+│   └── postgres/            # Dados do PostgreSQL
+├── generated/
+│   └── prisma/              # Prisma Client gerado
+├── node_modules/            # Dependências do projeto
+├── prisma/
+│   ├── migrations/          # Migrações do banco
+│   ├── schema.prisma        # Schema do Prisma
+│   └── seed.js              # Seed do banco
+├── src/
+│   └── server.ts            # Código principal da API (Express)
+├── Dockerfile               # Configuração do Docker
+├── docker-compose.yml       # Orquestração de containers
+├── package.json             # Configurações e scripts
+├── README.md                # Documentação do projeto
+├── swagger.json             # Especificação OpenAPI
+├── tsconfig.json            # Configuração do TypeScript
+```
+
+> Código fonte em `src/`, schema e migrações em `prisma/`, documentação em `swagger.json` e assets. Estrutura pensada para **estudos e evolução** do projeto.
 
 ---
 
 ## 🛠️ Observações
-- Este projeto foi feito para fins de estudo.
-- Caso use VS Code, a extensão oficial do Prisma pode mostrar avisos visuais incorretos com a versão 6 — isso **não afeta o funcionamento**.
 
----
-
-## 📁 Estrutura do Projeto
-
-```
-movieflix-api/
-├── assets/                  # Imagens e recursos estáticos (ex: swagger.png)
-├── dist/                    # Código compilado (gerado pelo build)
-├── node_modules/            # Dependências do projeto
-├── prisma/
-│   ├── migrations/          # Migrações do banco de dados
-│   └── schema.prisma        # Schema do Prisma ORM
-├── src/
-│   └── server.ts            # Código principal da API (Express)
-├── .env                     # Variáveis de ambiente (não versionado)
-├── .gitignore               # Arquivos/pastas ignorados pelo git
-├── package.json             # Configurações e scripts do projeto
-├── README.md                # Documentação do projeto
-├── swagger.json             # Documentação OpenAPI/Swagger
-├── tsconfig.json            # Configuração do TypeScript
-```
-
-- O código fonte está em `src/`.
-- O schema e as migrações do banco ficam em `prisma/`.
-- A documentação da API está em `swagger.json` e ilustrada em `assets/`.
-- O build TypeScript gera arquivos em `dist/`.
-- As variáveis de ambiente ficam no `.env`.
-
-> Estrutura pensada para facilitar estudos, manutenção e evolução do projeto.
+- Projeto desenvolvido para **fins de estudo e portfólio**.
+- A extensão do Prisma no VS Code pode apresentar **avisos visuais incorretos** na versão 6 — isso **não afeta o funcionamento**.
+- Preparado para futuras melhorias, como autenticação, paginação e filtros avançados.
 
 ---
 
 ## 🙏 Agradecimentos
 
-Agradeço ao **Dev em Dobro**, à comunidade Node.js e Prisma, e a todos os materiais de estudo que me ajudaram a construir este projeto.
+Agradeço ao **Dev em Dobro**, à comunidade **Node.js** e **Prisma**, e a todos os materiais que contribuíram para o desenvolvimento deste projeto.
 
 ---
 
-## 👩‍💻 Autor
+## 👩‍💻 Autora
 
-Desenvolvido por **Dev Seravali**
-
-[GitHub](https://github.com/devseravali) | [LinkedIn](https://www.linkedin.com/in/devseravali) | [YouTube](https://www.youtube.com/@devseravali)
-
+Desenvolvido por **Dev Seravali**  
+[GitHub](https://github.com/devseravali) | [LinkedIn](https://www.linkedin.com/in/dev-seravali) | [YouTube](https://www.youtube.com/@devseravali)
 ---
