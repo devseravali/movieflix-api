@@ -1,7 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import swaggerUi from "swagger-ui-express";
-import { createRequire } from "module";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -41,8 +40,7 @@ app.get("/languages", async (req, res) => {
     }
 });
 
-const require = createRequire(import.meta.url);
-const swaggerDocument = require("../swagger.json");
+import swaggerDocument from "../swagger.json" assert { type: "json" };
 
 app.use(express.json());
 
